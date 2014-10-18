@@ -32,11 +32,35 @@ public class Hard{
 	//20.9 Ger and maintain median of a long sequence of number
 	Private PriorityQueue<Integer> maxHeap, minHeap;
 	public int getMedian(){
-
+		if(maxHeap.isEmpty())
+			return minHeap.peek();
+		else if(minHeap.isEmpty())
+			return maxHeap.peek();
+		else{
+			if(maxHeap.size()==minHeap.size())
+				return (maxHeap.peek()+minHeap.peek())/2;
+			else if(maxHeap.size()>minHeap.size())
+				return maxHeap.peek();
+			else
+				return minHeap.peek();
+		}
 	}
 	public void addNew(int randNum){
 		if(maxHeap.size()==minHeap.size()){
-			if((minHeap.peek()!-null))
+			if((minHeap.peek()!=null && minHeap.peek()<randNum)){
+				maxHeap.offer(minHeap.poll());
+				minHeap.offer(randNum);
+			}
+			else
+				max.offer(randNum);
+		}
+		else{
+			if(randNum<maxHeap.peek()){
+				minHeap.offer(maxHeap.poll());
+				maxHeap.offer(randNum);
+			}
+			else
+				minHeap.offer(randNum);
 		}
 	}
 }
